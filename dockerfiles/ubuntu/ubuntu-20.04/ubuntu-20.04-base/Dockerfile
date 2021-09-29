@@ -48,7 +48,12 @@ RUN apt-get update && \
         xterm \
         iproute2 \
         fluxbox \
-        tightvncserver && \
+        tightvncserver \
+        libncurses-dev \
+        libgmp-dev \
+        libmpc-dev \
+        python3-pip \
+        libssl-dev && \
     cp -af /etc/skel/ /etc/vncskel/ && \
     echo "export DISPLAY=1" >>/etc/vncskel/.bashrc && \
     mkdir  /etc/vncskel/.vnc && \
