@@ -53,6 +53,7 @@ RUN apt-get update && \
         libgmp-dev \
         libmpc-dev \
         python3-pip \
+        gdisk \
         libssl-dev && \
     cp -af /etc/skel/ /etc/vncskel/ && \
     echo "export DISPLAY=1" >>/etc/vncskel/.bashrc && \
