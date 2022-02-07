@@ -31,7 +31,6 @@ RUN apt-get update && \
         socat \
         python \
         python3 \
-        python3-pip \
         python3-pexpect \
         xz-utils  \
         locales \
@@ -52,8 +51,11 @@ RUN apt-get update && \
         libncurses-dev \
         libgmp-dev \
         libmpc-dev \
+<<<<<<< Updated upstream
         python3-pip \
         gdisk \
+=======
+>>>>>>> Stashed changes
         libssl-dev && \
     cp -af /etc/skel/ /etc/vncskel/ && \
     echo "export DISPLAY=1" >>/etc/vncskel/.bashrc && \
@@ -70,6 +72,7 @@ RUN  bash /build-install-dumb-init.sh && \
      rm /build-install-dumb-init.sh && \
      bash /install-multilib.sh && \
      rm /install-multilib.sh && \
+     apt-get install -y python3-pip && \
      apt-get clean
 
 USER yoctouser
