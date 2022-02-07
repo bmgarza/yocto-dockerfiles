@@ -51,11 +51,6 @@ RUN apt-get update && \
         libncurses-dev \
         libgmp-dev \
         libmpc-dev \
-<<<<<<< Updated upstream
-        python3-pip \
-        gdisk \
-=======
->>>>>>> Stashed changes
         libssl-dev && \
     cp -af /etc/skel/ /etc/vncskel/ && \
     echo "export DISPLAY=1" >>/etc/vncskel/.bashrc && \
