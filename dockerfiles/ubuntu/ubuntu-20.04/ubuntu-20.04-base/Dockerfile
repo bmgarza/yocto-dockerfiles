@@ -51,6 +51,7 @@ RUN apt-get update && \
         libncurses-dev \
         libgmp-dev \
         libmpc-dev \
+        gdisk \
         libssl-dev && \
     cp -af /etc/skel/ /etc/vncskel/ && \
     echo "export DISPLAY=1" >>/etc/vncskel/.bashrc && \
