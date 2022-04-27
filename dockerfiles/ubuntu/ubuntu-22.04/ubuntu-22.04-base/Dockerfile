@@ -1,20 +1,11 @@
-# ubuntu-16.04-base
-# Copyright (C) 2015-2016 Intel Corporation
+# ubuntu-22.04-base
+# Copyright (C) 2020-2021 Intel Corporation
+# Copyright (C) 2022 Konsulko Group
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License version 2 as
-# published by the Free Software Foundation.
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-FROM ubuntu:16.04
+FROM ubuntu:22.04
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -29,8 +20,9 @@ RUN apt-get update && \
         build-essential \
         chrpath \
         socat \
-        python \
         python3 \
+        python3-pip \
+        python3-pexpect \
         xz-utils  \
         locales \
         cpio \
@@ -38,8 +30,18 @@ RUN apt-get update && \
         tmux \
         sudo \
         iputils-ping \
+        python3-git \
+        python3-jinja2 \
+        libegl1-mesa \
+        libsdl1.2-dev \
+        pylint \
+        xterm \
+        iproute2 \
         fluxbox \
-        tightvncserver && \
+        tightvncserver \
+        lz4 \
+        zstd \
+        file && \
     cp -af /etc/skel/ /etc/vncskel/ && \
     echo "export DISPLAY=1" >>/etc/vncskel/.bashrc && \
     mkdir  /etc/vncskel/.vnc && \
@@ -49,13 +51,6 @@ RUN apt-get update && \
     /usr/sbin/locale-gen en_US.UTF-8 && \
     echo 'dash dash/sh boolean false' | debconf-set-selections && \
     DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
-
-# The versions of gcc, tar and other tools found in Ubuntu 16.04 are now too
-# old to build recent Yocto Project releases. Install the buildtools tarball to
-# provide the required tools.
-COPY install-buildtools.sh /
-RUN bash /install-buildtools.sh && \
-    rm /install-buildtools.sh
 
 COPY build-install-dumb-init.sh install-multilib.sh /
 RUN  bash /build-install-dumb-init.sh && \

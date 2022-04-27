@@ -1,47 +1,45 @@
-# ubuntu-18.04-base
+# debian-11-base
 # Copyright (C) 2015-2021 Intel Corporation
 #
 # SPDX-License-Identifier: GPL-2.0-only
 #
 
-FROM ubuntu:18.04
+FROM debian:11
 
-RUN apt-get update && \
+RUN apt-get clean && \
+    apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        gawk \
-        wget \
-        git-core \
-        subversion \
-        diffstat \
-        unzip \
-        sysstat \
-        texinfo \
         build-essential \
         chrpath \
-        socat \
+        cpio \
+        diffstat \
+        fluxbox \
+        gawk \
+        git-core \
+        locales \
+	lz4 \
+        procps \
         python \
         python3 \
-        xz-utils  \
-        locales \
-        cpio \
         screen \
-        tmux \
+        socat \
+        subversion \
         sudo \
-        iputils-ping \
-        iproute2 \
-        fluxbox \
+        sysstat \
+        texinfo \
         tightvncserver \
-        liblz4-tool \
-        zstd && \
+        tmux \
+        unzip \
+        wget \
+        xz-utils \
+	zstd && \
     cp -af /etc/skel/ /etc/vncskel/ && \
     echo "export DISPLAY=1" >>/etc/vncskel/.bashrc && \
     mkdir  /etc/vncskel/.vnc && \
     echo "" | vncpasswd -f > /etc/vncskel/.vnc/passwd && \
     chmod 0600 /etc/vncskel/.vnc/passwd && \
     useradd -U -m yoctouser && \
-    /usr/sbin/locale-gen en_US.UTF-8 && \
-    echo 'dash dash/sh boolean false' | debconf-set-selections && \
-    DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
+    echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen
 
 COPY build-install-dumb-init.sh install-multilib.sh /
 RUN  bash /build-install-dumb-init.sh && \

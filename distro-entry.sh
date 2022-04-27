@@ -1,17 +1,8 @@
 #!/bin/bash
-# Copyright (C) 2019 Intel Corporation
+# Copyright (C) 2019-2021 Intel Corporation
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License version 2 as
-# published by the Free Software Foundation.
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
 
 if [ "$(uname -m)" = "aarch64" ]; then
     SETUPSCRIPT="environment-setup-aarch64-pokysdk-linux"
@@ -20,9 +11,12 @@ elif [ "$(uname -m)" = "x86_64" ]; then
 fi
 
 # This entry point is so that we can do distro specific changes to the launch.
-if [ -e /opt/poky/3.1.3/${SETUPSCRIPT} ]; then
+if [ -e /opt/poky/3.1.13/${SETUPSCRIPT} ]; then
     # Buildtools has been installed so enable it
-    . /opt/poky/3.1.3/${SETUPSCRIPT} || exit 1
+    . /opt/poky/3.1.13/${SETUPSCRIPT} || exit 1
+elif [ -e /opt/poky/4.0/${SETUPSCRIPT} ]; then
+    # Buildtools(-make) has been installed so enable it
+    . /opt/poky/4.0/${SETUPSCRIPT} || exit 1
 fi
 
 exec "$@"

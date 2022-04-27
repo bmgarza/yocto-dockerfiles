@@ -1,21 +1,11 @@
 #!/bin/bash
 
-# vnc-script
+# vnc-in-container.sh
 #
-# Copyright (C) 2016 Intel Corporation
+# Copyright (C) 2016-2021 Intel Corporation
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License version 2 as
-# published by the Free Software Foundation.
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 set -e
 set -x
@@ -25,10 +15,14 @@ ls -al /workdir
 useradd -m --skel=/etc/vncskel vncuser
 
 # install xdpyinfo in the distros that are missing it
-if grep -q CentOS /etc/*release; then
-    yum -y install xorg-x11-utils
-elif grep -q Fedora /etc/*release; then
+if grep -q Alma /etc/*release; then
     dnf -y install xorg-x11-utils
+elif grep -q CentOS /etc/*release; then
+    yum -y install xorg-x11-utils
+# since fedora-34, xdpyinfo is its own package
+# since fedora-35, xorg-x11-utils has been dropped
+elif grep -q Fedora /etc/*release; then
+    dnf -y install xdpyinfo
 elif grep -q Ubuntu /etc/*release || grep -q Debian /etc/*release; then
     # Ubuntu/debian brings in xdpyinfo by default
     true;

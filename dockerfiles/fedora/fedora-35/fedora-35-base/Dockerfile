@@ -1,20 +1,11 @@
-# fedora-33-base
+# fedora-35-base
 # Copyright (C) 2021 Intel Corporation
+# Copyright (C) 2021 Konsulko Group
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License version 2 as
-# published by the Free Software Foundation.
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-FROM fedora:33
+FROM fedora:35
 
 RUN dnf -y update && \
     dnf -y install \
@@ -70,7 +61,9 @@ RUN dnf -y update && \
         sudo \
         screen \
         tigervnc-server \
-        tmux && \
+        tmux \
+        lz4 \
+        zstd && \
     cp -af /etc/skel/ /etc/vncskel/ && \
     echo "export DISPLAY=1" >>/etc/vncskel/.bashrc && \
     mkdir  /etc/vncskel/.vnc && \
