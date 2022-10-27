@@ -44,6 +44,7 @@ RUN apt-get update && \
         gdisk \
         libssl-dev\
         lz4 \
+        bsdmainutils \
         zstd && \
     cp -af /etc/skel/ /etc/vncskel/ && \
     echo "export DISPLAY=1" >>/etc/vncskel/.bashrc && \
